@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年度 新商品開発・撮影進行計画</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1A2744; --navy-light: #243556; --teal: #0A7E8C; --teal-light: #E8F6F8;
+  --gold: #D4A843; --gold-light: #FDF6E3; --green: #2D8B4E; --green-light: #E8F5ED;
+  --amber: #D4A843; --amber-light: #FEF3C7; --red: #C94C4C; --red-light: #FDE8E8;
+  --white: #FFFFFF; --off-white: #F5F7FA; --light-gray: #E8ECF1; --mid-gray: #94A3B8;
+  --dark-text: #1E293B; --body-text: #334155; --caption: #64748B;
+  --purple: #6366F1; --purple-light: #F0F0FF; --violet: #9333EA; --violet-light: #F8F0FF;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif; background: #F0F2F5; color: var(--dark-text); }
+
+/* ── Top bar ── */
+.topbar { background: var(--navy); padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.topbar-title { display: flex; align-items: center; gap: 12px; }
+.topbar-title .icon { font-size: 18px; }
+.topbar-title .text { color: var(--white); font-weight: 800; font-size: 16px; }
+.topbar-title .date { color: var(--mid-gray); font-size: 11px; margin-left: 8px; }
+.view-toggle { display: flex; gap: 4px; background: var(--navy-light); border-radius: 8px; padding: 3px; }
+.view-toggle button { padding: 6px 18px; border-radius: 6px; border: none; cursor: pointer; font-weight: 700; font-size: 12px; transition: all 0.15s; font-family: inherit; color: var(--mid-gray); background: transparent; }
+.view-toggle button.active { background: var(--teal); color: var(--white); }
+
+/* ── Filter bar ── */
+.filter-bar { background: var(--white); padding: 10px 32px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--light-gray); flex-wrap: wrap; }
+.filter-bar .label { font-size: 12px; color: var(--caption); font-weight: 600; }
+.filter-btn { padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 700; transition: all 0.15s; font-family: inherit; }
+.filter-btn.green { border: 1.5px solid var(--green); }
+.filter-btn.green.on { background: var(--green-light); color: var(--green); }
+.filter-btn.amber { border: 1.5px solid var(--amber); }
+.filter-btn.amber.on { background: var(--amber-light); color: var(--amber); }
+.filter-btn.red { border: 1.5px solid var(--red); }
+.filter-btn.red.on { background: var(--red-light); color: var(--red); }
+.filter-btn:not(.on) { background: var(--white); color: var(--mid-gray); opacity: 0.5; }
+.legend { margin-left: auto; display: flex; gap: 10px; }
+.legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--caption); }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+/* ── Content ── */
+.content { max-width: 1200px; margin: 0 auto; padding: 24px 24px 40px; }
+.hidden { display: none; }
+
+/* ── Section titles ── */
+.section-title h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+.section-title .sub { font-size: 13px; color: var(--caption); margin-bottom: 20px; }
+
+/* ── Overview hero ── */
+.hero { background: var(--navy); border-radius: 12px; padding: 36px 32px; margin-bottom: 28px; color: var(--white); text-align: center; }
+.hero .year { font-size: 13px; color: var(--gold); font-weight: 600; letter-spacing: 4px; margin-bottom: 6px; }
+.hero h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; }
+.hero .desc { margin: 8px auto 0; font-size: 13px; color: var(--mid-gray); max-width: 560px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+.kpi-card { background: var(--navy-light); border-radius: 10px; padding: 20px 16px; text-align: center; }
+.kpi-card .num { font-size: 36px; font-weight: 800; }
+.kpi-card .kpi-label { font-size: 14px; font-weight: 700; margin-top: 2px; }
+.kpi-card .kpi-sub { font-size: 11px; color: var(--mid-gray); margin-top: 4px; }
+.kpi-card.teal { border-top: 3px solid var(--teal); }
+.kpi-card.teal .num { color: var(--teal); }
+.kpi-card.gold { border-top: 3px solid var(--gold); }
+.kpi-card.gold .num { color: var(--gold); }
+.kpi-card.red { border-top: 3px solid var(--red); }
+.kpi-card.red .num { color: var(--red); }
+
+/* ── Timeline grid (one-pager) ── */
+.timeline-grid { display: grid; grid-template-columns: 90px repeat(8, 1fr); overflow-x: auto; }
+.tl-header { background: var(--navy); padding: 8px 4px; text-align: center; color: var(--white); font-weight: 700; font-size: 13px; border-left: 1px solid var(--navy-light); }
+.tl-header:first-child { border-radius: 6px 0 0 0; border-left: none; }
+.tl-header:last-child { border-radius: 0 6px 0 0; }
+.tl-row-label { display: flex; align-items: center; justify-content: center; padding: 8px 4px; writing-mode: vertical-rl; text-orientation: mixed; color: var(--white); font-weight: 700; font-size: 11px; letter-spacing: 2px; min-height: 70px; }
+.tl-cell { border-left: 1px solid var(--light-gray); border-bottom: 1px solid var(--light-gray); padding: 4px; min-height: 60px; }
+
+/* ── Timeline cards ── */
+.tl-cell { position: relative; overflow: visible; }
+.tl-card { position: relative; padding: 5px 6px; margin: 3px 0; border-radius: 5px; background: var(--white); cursor: grab; transition: box-shadow 0.15s, transform 0.15s; box-shadow: 0 1px 3px rgba(0,0,0,0.06); z-index: 1; user-select: none; -webkit-user-select: none; }
+.tl-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.12); transform: translateY(-1px); z-index: 1000; }
+.tl-card.border-green { border-left: 3px solid var(--green); }
+.tl-card.border-amber { border-left: 3px solid var(--amber); }
+.tl-card.border-red { border-left: 3px solid var(--red); }
+.tl-card .card-title { font-size: 9px; font-weight: 700; color: var(--dark-text); line-height: 1.3; }
+#global-tooltip { display: none; position: fixed; background: var(--navy); color: var(--white); padding: 12px 16px; border-radius: 8px; font-size: 12px; line-height: 1.5; z-index: 99999; width: 240px; box-shadow: 0 8px 30px rgba(0,0,0,0.35); white-space: pre-line; pointer-events: none; }
+#global-tooltip .tt-title { font-weight: 700; margin-bottom: 4px; font-size: 13px; }
+#global-tooltip .tt-sub { color: var(--mid-gray); margin-bottom: 6px; }
+#global-tooltip .tt-meta { margin-top:8px;font-size:10px;color:var(--mid-gray);border-top:1px solid rgba(255,255,255,0.15);padding-top:6px; }
+.tl-cell.drag-over { background: rgba(10,126,140,0.18) !important; outline: 2px dashed var(--teal); outline-offset: -2px; border-radius: 4px; }
+.drag-hint { display: flex; align-items: center; gap: 6px; padding: 6px 14px; background: var(--gold-light); border-radius: 6px; font-size: 11px; color: var(--dark-text); font-weight: 500; }
+#drag-ghost { position: fixed; z-index: 100000; pointer-events: none; padding: 6px 12px; background: var(--navy); color: var(--white); border-radius: 6px; font-size: 11px; font-weight: 700; box-shadow: 0 6px 24px rgba(0,0,0,0.3); white-space: nowrap; display: none; font-family: 'Noto Sans JP', Arial, sans-serif; }
+
+/* ── Status badges ── */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; }
+.badge.green { background: var(--green-light); color: var(--green); }
+.badge.amber { background: var(--amber-light); color: var(--amber); }
+.badge.red { background: var(--red-light); color: var(--red); }
+
+/* ── Category tags ── */
+.cat-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 600; }
+.cat-tag.sales { background: var(--off-white); color: var(--navy); }
+.cat-tag.shooting { background: var(--teal-light); color: var(--teal); }
+.cat-tag.internal { background: var(--purple-light); color: var(--purple); }
+.cat-tag.external { background: var(--violet-light); color: var(--violet); }
+
+/* ── Sales timeline ── */
+.sales-timeline { display: flex; justify-content: space-between; padding: 0 20px; position: relative; }
+.sales-timeline::before { content: ''; position: absolute; top: 20px; left: 40px; right: 40px; height: 3px; background: var(--light-gray); border-radius: 2px; }
+.sales-col { text-align: center; position: relative; width: 140px; flex: 0 0 auto; }
+.month-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; position: relative; z-index: 2; color: var(--white); font-weight: 700; font-size: 12px; }
+.sales-card { background: var(--white); border: 1px solid var(--light-gray); border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; text-align: left; transition: all 0.15s; cursor: default; }
+.sales-card:hover { border-color: var(--teal); box-shadow: 0 3px 12px rgba(0,0,0,0.1); transform: translateY(-2px); }
+.sales-card .brand { font-size: 11px; font-weight: 700; color: var(--dark-text); }
+.sales-card .product { font-size: 10px; color: var(--body-text); }
+.sales-card .note { font-size: 9px; color: var(--caption); margin-top: 2px; }
+
+/* ── Sales table ── */
+.sales-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid var(--light-gray); }
+.sales-table th { background: var(--navy); color: var(--white); padding: 10px 14px; font-weight: 700; text-align: left; font-size: 12px; }
+.sales-table td { padding: 8px 14px; border-bottom: 1px solid var(--light-gray); }
+.sales-table tr:nth-child(even) { background: var(--off-white); }
+
+/* ── Shooting schedule ── */
+.shoot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.shoot-col { border-radius: 10px; overflow: hidden; border: 1px solid var(--light-gray); }
+.shoot-col-header { background: var(--teal); padding: 10px 16px; text-align: center; color: var(--white); font-weight: 700; font-size: 15px; }
+.shoot-col-body { padding: 12px; background: var(--white); min-height: 200px; }
+.shoot-item { margin-bottom: 10px; }
+.shoot-item .tags { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.shoot-item .card { padding: 8px 10px; border-radius: 6px; background: var(--off-white); border-left: 3px solid var(--light-gray); }
+.shoot-item .card.border-green { border-left-color: var(--green); }
+.shoot-item .card.border-amber { border-left-color: var(--amber); }
+.shoot-item .card.border-red { border-left-color: var(--red); }
+.shoot-item .card .item-title { font-size: 12px; font-weight: 700; color: var(--dark-text); }
+.shoot-item .card .item-sub { font-size: 11px; color: var(--caption); margin-top: 2px; white-space: pre-line; }
+.shoot-note { margin-top: 12px; padding: 10px 16px; background: var(--off-white); border-radius: 8px; font-size: 11px; color: var(--caption); line-height: 1.6; }
+
+/* ── Status section ── */
+.status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 36px; }
+.status-col { border-radius: 10px; overflow: hidden; border: 1px solid var(--light-gray); }
+.status-col-header { padding: 12px 16px; display: flex; align-items: center; gap: 8px; color: var(--white); }
+.status-col-header.green { background: var(--green); }
+.status-col-header.amber { background: var(--amber); }
+.status-col-header.red { background: var(--red); }
+.status-col-header .status-icon { font-size: 20px; }
+.status-col-header .status-label { font-weight: 800; font-size: 17px; }
+.status-col-header .count { margin-left: auto; background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 10px; font-size: 13px; font-weight: 700; }
+.status-col-body { padding: 14px; min-height: 140px; }
+.status-col-body.green { background: var(--green-light); }
+.status-col-body.amber { background: var(--amber-light); }
+.status-col-body.red { background: var(--red-light); }
+.status-card { background: var(--white); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.status-card.border-green { border-left: 3px solid var(--green); }
+.status-card.border-amber { border-left: 3px solid var(--amber); }
+.status-card.border-red { border-left: 3px solid var(--red); }
+.status-card .s-title { font-size: 13px; font-weight: 700; color: var(--dark-text); }
+.status-card .s-detail { font-size: 11px; color: var(--caption); margin-top: 4px; white-space: pre-line; }
+
+/* ── Actions ── */
+.action-list { display: flex; flex-direction: column; gap: 10px; }
+.action-card { display: flex; align-items: center; gap: 14px; background: var(--white); border-radius: 10px; padding: 12px 18px; border: 1px solid var(--light-gray); transition: all 0.15s; cursor: default; }
+.action-card:hover { transform: translateX(4px); box-shadow: 0 3px 12px rgba(0,0,0,0.08); }
+.action-card:hover.high { border-color: var(--red); }
+.action-card:hover.med { border-color: var(--gold); }
+.action-num { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 800; font-size: 16px; }
+.action-num.high { background: var(--red); }
+.action-num.med { background: var(--gold); }
+.action-deadline { padding: 4px 14px; border-radius: 6px; flex-shrink: 0; font-weight: 700; font-size: 11px; }
+.action-deadline.high { background: var(--red-light); color: var(--red); }
+.action-deadline.med { background: var(--amber-light); color: var(--amber); }
+.action-text { font-size: 14px; color: var(--dark-text); font-weight: 500; }
+.action-callout { margin-top: 20px; background: var(--navy); border-radius: 10px; padding: 16px 24px; color: var(--white); font-size: 13px; line-height: 1.6; }
+.action-callout strong { color: var(--gold); }
+
+/* ── Footer ── */
+.footer { margin-top: 24px; padding: 12px 16px; text-align: center; font-size: 11px; color: var(--caption); border-top: 1px solid var(--light-gray); }
+
+.empty-msg { text-align: center; color: var(--mid-gray); font-size: 12px; padding: 20px; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .topbar { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+  .filter-bar { padding: 8px 16px; }
+  .content { padding: 16px 12px 32px; }
+  .kpi-grid, .shoot-grid, .status-grid { grid-template-columns: 1fr; }
+  .sales-timeline { flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .timeline-grid { font-size: 11px; }
+  .legend { margin-left: 0; margin-top: 4px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="topbar-title">
+    <span class="icon">📋</span>
+    <span class="text">2026年度 新商品開発・撮影進行計画</span>
+    <span class="date">2026年4月時点</span>
+  </div>
+  <div class="view-toggle">
+    <button class="active" onclick="switchView('onepage')" id="btn-onepage">📊 1枚ペラ</button>
+    <button onclick="switchView('detail')" id="btn-detail">📑 詳細</button>
+  </div>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <span class="label">ステータスフィルター：</span>
+  <button class="filter-btn green on" onclick="toggleFilter('confirmed', this)" data-status="confirmed">✓ 確定</button>
+  <button class="filter-btn amber on" onclick="toggleFilter('adjusting', this)" data-status="adjusting">✓ 最終調整中</button>
+  <button class="filter-btn red on" onclick="toggleFilter('needed', this)" data-status="needed">✓ 要調整</button>
+  <div class="legend">
+    <div class="drag-hint">💡 カードをドラッグして月を移動可能</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--navy)"></div>販売予定</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>撮影</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>社内調整</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--violet)"></div>外部調整</div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+<!-- Global tooltip (outside all cards, no transform interference) -->
+<div id="global-tooltip"></div>
+<div id="drag-ghost"></div>
+
+  <!-- ==================== ONE-PAGE VIEW ==================== -->
+  <div id="view-onepage">
+    <div class="timeline-grid" id="timeline-grid"></div>
+    <div style="margin-top:24px" id="onepage-status"></div>
+  </div>
+
+  <!-- ==================== DETAIL VIEW ==================== -->
+  <div id="view-detail" class="hidden">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="year">2026年度</div>
+      <h1>新商品開発・撮影進行計画</h1>
+      <p class="desc">新商品販売予定と撮影・社内外調整タスクを時系列で整理し、確定事項・調整中事項・要判断事項を可視化</p>
+      <div class="kpi-grid">
+        <div class="kpi-card teal"><div class="num">8</div><div class="kpi-label">新商品</div><div class="kpi-sub">5〜12月に順次販売</div></div>
+        <div class="kpi-card gold"><div class="num">6+</div><div class="kpi-label">撮影案件</div><div class="kpi-sub">おせち3件含む</div></div>
+        <div class="kpi-card red"><div class="num">5</div><div class="kpi-label">要調整事項</div><div class="kpi-sub">5月中に判断必要</div></div>
+      </div>
+    </div>
+
+    <!-- Sales Schedule -->
+    <div class="section-title"><h2>新商品販売スケジュール</h2><div class="sub">5〜12月に計8商品（6ブランド）を順次販売予定</div></div>
+    <div style="overflow-x:auto">
+      <div class="sales-timeline">
+        <div class="sales-col"><div class="month-circle">5月</div><div class="sales-card"><div class="brand">寿司龍二郎</div><div class="product">穴子寿司</div></div></div>
+        <div class="sales-col"><div class="month-circle">6月</div><div class="sales-card"><div class="brand">ビリヤニ大</div><div class="product">チキンビリヤニ弁当</div><div class="note">常温商品</div></div></div>
+        <div class="sales-col"><div class="month-circle">7月</div><div class="sales-card"><div class="brand">北野坂 木下</div><div class="product">アイス</div></div></div>
+        <div class="sales-col"><div class="month-circle">8月</div><div class="sales-card"><div class="brand">おせち関連</div><div class="product">4商品 販売開始</div></div></div>
+        <div class="sales-col"><div class="month-circle">10月</div><div class="sales-card"><div class="brand">ニュー麺</div><div class="product">新味</div></div><div class="sales-card"><div class="brand">北野坂 木下</div><div class="product">パスタ</div></div></div>
+        <div class="sales-col"><div class="month-circle">12月</div><div class="sales-card"><div class="brand">ビリヤニ大</div><div class="product">新味ビリヤニ</div></div><div class="sales-card"><div class="brand">ギフト系</div><div class="product">新商品</div></div></div>
+      </div>
+    </div>
+    <table class="sales-table">
+      <thead><tr><th>販売月</th><th>ブランド</th><th>商品名</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td>5/8</td><td>寿司龍二郎</td><td>穴子寿司</td><td></td></tr>
+        <tr><td>6/15</td><td>ビリヤニ大</td><td>チキンビリヤニ弁当</td><td>常温商品</td></tr>
+        <tr><td>7/1</td><td>北野坂 木下</td><td>アイス</td><td></td></tr>
+        <tr><td>8/17</td><td>おせち関連</td><td>4商品</td><td>販売開始</td></tr>
+        <tr><td>10月</td><td>ニュー麺 / 北野坂 木下</td><td>新味 / パスタ</td><td></td></tr>
+        <tr><td>12月</td><td>ビリヤニ大 / ギフト系</td><td>新味ビリヤニ / ギフト新商品</td><td></td></tr>
+      </tbody>
+    </table>
+
+    <!-- Shooting Schedule -->
+    <div style="margin-top:36px">
+      <div class="section-title"><h2>撮影・社内外調整スケジュール</h2><div class="sub">撮影案件・社内外調整タスクを月別に整理</div></div>
+      <div class="shoot-grid" id="shoot-grid"></div>
+      <div class="shoot-note">※ 各ブランド早割版・通常版を想定 ／ 京天神ノグチ からすみちりめんも撮影対象</div>
+    </div>
+
+    <!-- Status -->
+    <div style="margin-top:36px" id="detail-status"></div>
+
+    <!-- Actions -->
+    <div style="margin-top:36px">
+      <div class="section-title"><h2>直近アクション・要判断事項</h2><div class="sub">期限順に整理した優先アクション</div></div>
+      <div class="action-list">
+        <div class="action-card high"><div class="action-num high">1</div><div class="action-deadline high">5月上旬（GW明け）</div><div class="action-text">社内関係者との事前擦り合わせを完了</div></div>
+        <div class="action-card high"><div class="action-num high">2</div><div class="action-deadline high">5月中</div><div class="action-text">動画クルー・スチールカメラマンとの事前オリエン調整を完了</div></div>
+        <div class="action-card high"><div class="action-num high">3</div><div class="action-deadline high">6月前半</div><div class="action-text">おせち関連動画撮影の主要日程確定を完了</div></div>
+        <div class="action-card med"><div class="action-num med">4</div><div class="action-deadline med">早期判断</div><div class="action-text">アイス撮影の実施場所を決定（兵庫現地 or 別会場）</div></div>
+      </div>
+      <div class="action-callout"><strong>重要：</strong>5〜6月は制作進行上の最重要期間。社内擦り合わせ → 外部オリエン → 撮影実施の順序を守り、抜け漏れのない進行管理を徹底する。</div>
+    </div>
+  </div>
+
+  <div class="footer">※本資料は進行管理用の整理資料です。確定情報に応じて順次更新予定。</div>
+</div>
+
+<script>
+// ── Data ──
+const MONTHS = ["5月","6月","7月","8月","9月","10月","11月","12月"];
+const CATS = [
+  { key:"sales", label:"販売予定", color:"var(--navy)", bg:"var(--off-white)", icon:"🏪" },
+  { key:"shooting", label:"撮影", color:"var(--teal)", bg:"var(--teal-light)", icon:"📷" },
+  { key:"internal", label:"社内調整", color:"var(--purple)", bg:"var(--purple-light)", icon:"👥" },
+  { key:"external", label:"外部調整", color:"var(--violet)", bg:"var(--violet-light)", icon:"🤝" },
+];
+const ITEMS = [
+  { month:"5月", cat:"sales", title:"寿司龍二郎：穴子寿司", sub:"5/8販売", status:"confirmed" },
+  { month:"6月", cat:"sales", title:"ビリヤニ大：チキンビリヤニ弁当", sub:"6/15販売予定（常温商品）", status:"confirmed" },
+  { month:"7月", cat:"sales", title:"北野坂 木下：アイス", sub:"7/1販売", status:"confirmed" },
+  { month:"8月", cat:"sales", title:"おせち関連4商品", sub:"8/17販売開始", status:"confirmed" },
+  { month:"10月", cat:"sales", title:"ニュー麺：新味 / 木下：パスタ", sub:"10月販売", status:"confirmed" },
+  { month:"12月", cat:"sales", title:"ビリヤニ大：新味 / ギフト系新商品", sub:"12月販売", status:"confirmed" },
+  { month:"5月", cat:"shooting", title:"ニュー麺：新味撮影", sub:"5月中に実施", status:"adjusting" },
+  { month:"6月", cat:"shooting", title:"祇園山口：おせち動画撮影", sub:"6月8日", status:"confirmed" },
+  { month:"6月", cat:"shooting", title:"京天神 ノグチ：おせち動画撮影", sub:"6月9日（火）12:00〜", status:"confirmed" },
+  { month:"6月", cat:"shooting", title:"銀座しのはら：おせち動画撮影", sub:"6/17 or 6/19 10:00開始", status:"adjusting" },
+  { month:"6月", cat:"shooting", title:"北野坂 木下：アイス撮影", sub:"兵庫の店舗現地か要検討", status:"needed" },
+  { month:"7月", cat:"shooting", title:"北野坂 木下：パスタ撮影", sub:"7〜8月に実施予定", status:"adjusting" },
+  { month:"5月", cat:"internal", title:"社内擦り合わせ", sub:"GW明け直後に実施\n外部オリエンに向けた事前整理", status:"needed" },
+  { month:"5月", cat:"internal", title:"社内すり合わせ：北野坂 木下 アイス撮影 価値訴求", sub:"撮影方針の社内確認", status:"needed" },
+  { month:"5月", cat:"external", title:"動画クルーとのオリエン", sub:"5/25-29で調整", status:"needed" },
+  { month:"5月", cat:"external", title:"スチールカメラマンとのオリエン", sub:"おせち撮影に向けた事前調整", status:"needed" },
+  { month:"5月", cat:"external", title:"スチールカメラマンとのオリエン：にゅう麺 新味", sub:"にゅう麺 新味撮影に向けた調整", status:"needed" },
+  { month:"6月", cat:"external", title:"スチールカメラマンとのオリエン：北野坂 木下 アイス撮影", sub:"アイス撮影に向けた事前調整", status:"needed" },
+  { month:"8月", cat:"external", title:"スチールカメラマンとのオリエン：北野坂 木下 パスタ", sub:"パスタ撮影に向けた調整", status:"needed" },
+];
+const STATUS_ITEMS = {
+  confirmed: [
+    { title:"祇園山口 おせち動画撮影", detail:"6月8日" },
+    { title:"京天神 ノグチ おせち動画撮影", detail:"6月9日（火）12:00〜" },
+  ],
+  adjusting: [
+    { title:"銀座しのはら おせち動画撮影", detail:"6月17日 または 6月19日 10:00開始\n先方と最終日程調整中" },
+  ],
+  needed: [
+    { title:"動画クルー・スタッフとのオリエン日程", detail:"5月中に確定が必要" },
+    { title:"スチールカメラマンとのオリエン日程", detail:"おせち撮影に向けた事前調整" },
+    { title:"北野坂 木下 アイス撮影の実施場所", detail:"兵庫の店舗現地か否か" },
+    { title:"社内事前擦り合わせ内容の整理", detail:"外部調整に先立ち完了が必要" },
+  ],
+};
+const STATUS_LABELS = { confirmed:"確定", adjusting:"最終調整中", needed:"要調整" };
+const STATUS_ICONS = { confirmed:"✓", adjusting:"◎", needed:"▲" };
+const STATUS_CLASSES = { confirmed:"green", adjusting:"amber", needed:"red" };
+
+// ── State ──
+let filters = { confirmed:true, adjusting:true, needed:true };
+let currentView = "onepage";
+
+function switchView(v) {
+  currentView = v;
+  document.getElementById("view-onepage").classList.toggle("hidden", v !== "onepage");
+  document.getElementById("view-detail").classList.toggle("hidden", v !== "detail");
+  document.getElementById("btn-onepage").classList.toggle("active", v === "onepage");
+  document.getElementById("btn-detail").classList.toggle("active", v === "detail");
+}
+
+function toggleFilter(status, btn) {
+  filters[status] = !filters[status];
+  btn.classList.toggle("on", filters[status]);
+  btn.textContent = (filters[status] ? "✓ " : "") + STATUS_LABELS[status];
+  render();
+}
+
+function badgeHTML(status, small) {
+  return `<span class="badge ${STATUS_CLASSES[status]}">${STATUS_ICONS[status]} ${STATUS_LABELS[status]}</span>`;
+}
+
+function cardBorderClass(status) {
+  return "border-" + STATUS_CLASSES[status];
+}
+
+// ── Render timeline grid ──
+function renderTimeline() {
+  let html = '';
+  html += `<div class="tl-header" style="border-radius:6px 0 0 0"><span style="font-size:10px;color:var(--mid-gray);font-weight:600">区分</span></div>`;
+  MONTHS.forEach((m,i) => {
+    const last = i === MONTHS.length - 1 ? 'border-radius:0 6px 0 0;' : '';
+    html += `<div class="tl-header" style="${last}">${m}</div>`;
+  });
+  CATS.forEach((cat, ci) => {
+    const minH = cat.key === "shooting" ? 110 : cat.key === "sales" ? 80 : 70;
+    html += `<div class="tl-row-label" style="background:${cat.color};min-height:${minH}px">${cat.icon} ${cat.label}</div>`;
+    MONTHS.forEach(month => {
+      const items = ITEMS.filter(i => i.month === month && i.cat === cat.key && filters[i.status]);
+      const bg = ci % 2 === 0 ? cat.bg : 'var(--white)';
+      html += `<div class="tl-cell" style="background:${bg}" data-month="${month}" data-cat="${cat.key}">`;
+      items.forEach(item => {
+        const idx = ITEMS.indexOf(item);
+        html += `<div class="tl-card ${cardBorderClass(item.status)}" data-index="${idx}">
+          <div class="card-title">${item.title}</div>
+        </div>`;
+      });
+      html += '</div>';
+    });
+  });
+  document.getElementById("timeline-grid").innerHTML = html;
+}
+
+// ── Tooltip ──
+const gtt = () => document.getElementById('global-tooltip');
+function showTip(idx, e) {
+  const tt = gtt(); const item = ITEMS[idx]; if (!item) return;
+  tt.innerHTML = '<div class="tt-title">'+item.title+'</div><div class="tt-sub">'+item.sub+'</div>'+badgeHTML(item.status)+'<div class="tt-meta">📅 '+item.month+'｜'+CATS.find(c=>c.key===item.cat).label+'</div>';
+  tt.style.display = 'block'; moveTip(e);
+}
+function moveTip(e) {
+  const tt = gtt(); let x = e.clientX+8, y = e.clientY+8;
+  if (x+250>window.innerWidth) x=e.clientX-250;
+  if (y+160>window.innerHeight) y=e.clientY-160;
+  tt.style.left=x+'px'; tt.style.top=y+'px';
+}
+function hideTip() { gtt().style.display='none'; }
+
+// ── Custom Drag (mouse-based, no HTML5 drag API) ──
+var _drag = { idx:null, active:false, sx:0, sy:0, srcCard:null };
+
+function initDragSystem() {
+  var grid = document.getElementById('timeline-grid');
+  var ghost = document.getElementById('drag-ghost');
+
+  // Tooltip
+  grid.addEventListener('mouseover', function(e) {
+    if (_drag.active) return;
+    var c = e.target.closest('.tl-card');
+    if (c) { var i=parseInt(c.getAttribute('data-index')); if(!isNaN(i)) showTip(i,e); }
+  });
+  grid.addEventListener('mousemove', function(e) {
+    if (_drag.active) return;
+    if (gtt().style.display==='block') {
+      if (e.target.closest('.tl-card')) moveTip(e); else hideTip();
+    }
+  });
+  grid.addEventListener('mouseout', function(e) {
+    if (_drag.active) return;
+    var c=e.target.closest('.tl-card');
+    var r=e.relatedTarget?e.relatedTarget.closest('.tl-card'):null;
+    if (c && c!==r) hideTip();
+  });
+
+  // Mousedown → prepare drag
+  grid.addEventListener('mousedown', function(e) {
+    var c = e.target.closest('.tl-card');
+    if (!c) return;
+    var i = parseInt(c.getAttribute('data-index'));
+    if (isNaN(i)) return;
+    e.preventDefault();
+    _drag = { idx:i, active:false, sx:e.clientX, sy:e.clientY, srcCard:c };
+  });
+
+  // Mousemove → drag
+  document.addEventListener('mousemove', function(e) {
+    if (_drag.idx === null) return;
+    if (!_drag.active) {
+      if (Math.abs(e.clientX-_drag.sx)<5 && Math.abs(e.clientY-_drag.sy)<5) return;
+      _drag.active = true;
+      hideTip();
+      _drag.srcCard.style.opacity = '0.3';
+      ghost.textContent = ITEMS[_drag.idx].title;
+      ghost.style.display = 'block';
+    }
+    ghost.style.left = (e.clientX+12)+'px';
+    ghost.style.top = (e.clientY-16)+'px';
+    // Highlight
+    document.querySelectorAll('.tl-cell.drag-over').forEach(function(el){el.classList.remove('drag-over');});
+    ghost.style.display = 'none'; // hide ghost to get element underneath
+    var under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.style.display = 'block';
+    if (under) {
+      var cell = under.closest('.tl-cell');
+      if (cell && ITEMS[_drag.idx] && cell.getAttribute('data-cat')===ITEMS[_drag.idx].cat) {
+        cell.classList.add('drag-over');
+      }
+    }
+  });
+
+  // Mouseup → drop
+  document.addEventListener('mouseup', function(e) {
+    if (_drag.idx === null) return;
+    var wasActive = _drag.active;
+    if (wasActive) {
+      ghost.style.display = 'none';
+      document.querySelectorAll('.tl-cell.drag-over').forEach(function(el){el.classList.remove('drag-over');});
+      var under = document.elementFromPoint(e.clientX, e.clientY);
+      var cell = under ? under.closest('.tl-cell') : null;
+      if (cell) {
+        var item = ITEMS[_drag.idx];
+        var tm = cell.getAttribute('data-month');
+        var tc = cell.getAttribute('data-cat');
+        if (item && tc===item.cat && tm!==item.month) {
+          var old = item.month;
+          if (confirm('「'+item.title+'」を\n'+old+' → '+tm+' に移動しますか？')) {
+            item.month = tm;
+            render();
+          } else {
+            if (_drag.srcCard) _drag.srcCard.style.opacity='';
+          }
+        } else {
+          if (_drag.srcCard) _drag.srcCard.style.opacity='';
+        }
+      } else {
+        if (_drag.srcCard) _drag.srcCard.style.opacity='';
+      }
+    }
+    _drag = { idx:null, active:false, sx:0, sy:0, srcCard:null };
+  });
+}
+
+// ── Render shooting schedule ──
+function renderShooting() {
+  const groups = [
+    { label:"5月", months:["5月"] },
+    { label:"6月", months:["6月"] },
+    { label:"7〜8月", months:["7月"] },
+  ];
+  let html = '';
+  groups.forEach(g => {
+    const items = ITEMS.filter(i => g.months.includes(i.month) && i.cat !== "sales" && filters[i.status]);
+    html += `<div class="shoot-col"><div class="shoot-col-header">${g.label}</div><div class="shoot-col-body">`;
+    if (items.length === 0) {
+      html += '<div class="empty-msg">該当なし</div>';
+    } else {
+      items.forEach(item => {
+        html += `<div class="shoot-item">
+          <div class="tags">
+            <span class="cat-tag ${item.cat}">${CATS.find(c=>c.key===item.cat).icon} ${CATS.find(c=>c.key===item.cat).label}</span>
+            ${badgeHTML(item.status)}
+          </div>
+          <div class="card ${cardBorderClass(item.status)}">
+            <div class="item-title">${item.title}</div>
+            <div class="item-sub">${item.sub.replace(/\n/g,'<br>')}</div>
+          </div>
+        </div>`;
+      });
+    }
+    html += '</div></div>';
+  });
+  document.getElementById("shoot-grid").innerHTML = html;
+}
+
+// ── Render status section ──
+function renderStatus(containerId) {
+  const cols = [
+    { key:"confirmed", label:"確定", icon:"✓", cls:"green" },
+    { key:"adjusting", label:"最終調整中", icon:"◎", cls:"amber" },
+    { key:"needed", label:"要調整", icon:"▲", cls:"red" },
+  ];
+  let html = '<div class="section-title"><h2>ステータス整理</h2><div class="sub">各案件のステータスを一覧整理</div></div>';
+  html += '<div class="status-grid">';
+  cols.forEach(col => {
+    const items = STATUS_ITEMS[col.key];
+    html += `<div class="status-col">
+      <div class="status-col-header ${col.cls}">
+        <span class="status-icon">${col.icon}</span>
+        <span class="status-label">${col.label}</span>
+        <span class="count">${items.length}</span>
+      </div>
+      <div class="status-col-body ${col.cls}">`;
+    items.forEach(item => {
+      html += `<div class="status-card ${cardBorderClass(col.key)}">
+        <div class="s-title">${item.title}</div>
+        <div class="s-detail">${item.detail.replace(/\n/g,'<br>')}</div>
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+  document.getElementById(containerId).innerHTML = html;
+}
+
+function render() {
+  renderTimeline();
+  renderShooting();
+  renderStatus("onepage-status");
+  renderStatus("detail-status");
+}
+
+// Initial render
+render();
+// Attach mouse-based drag system (runs once, works via event delegation)
+initDragSystem();
+</script>
+</body>
+</html>
